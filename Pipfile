@@ -11,6 +11,7 @@ python-decouple = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 django = "<5.3,>=5.2"
+django-filter = "*"
 
 [dev-packages]
 
