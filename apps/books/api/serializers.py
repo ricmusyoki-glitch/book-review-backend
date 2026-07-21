@@ -2,12 +2,14 @@ from django.db.models import Avg
 from rest_framework import serializers
 
 from apps.books.models import Book
+from apps.reviews.api.serializers import ReviewListSerializer
 
 
 class BookSerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source="created_by.username")
     average_rating = serializers.SerializerMethodField()
     review_count = serializers.SerializerMethodField()
+    reviews = ReviewListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Book
@@ -20,6 +22,7 @@ class BookSerializer(serializers.ModelSerializer):
             "created_by",
             "average_rating",
             "review_count",
+            "reviews",
             "created_at",
             "updated_at",
         ]

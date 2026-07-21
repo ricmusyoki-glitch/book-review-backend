@@ -3,6 +3,20 @@ from rest_framework import serializers
 from apps.reviews.models import Review
 
 
+class ReviewListSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.username")
+
+    class Meta:
+        model = Review
+        fields = [
+            "id",
+            "user",
+            "rating",
+            "comment",
+            "created_at",
+            "updated_at",
+        ]
+
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.username")
 
