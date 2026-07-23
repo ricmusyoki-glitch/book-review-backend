@@ -1,12 +1,14 @@
 from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from .serializers import RegisterSerializer
 
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
-from rest_framework.response import Response
-
-from rest_framework.views import APIView
 
 class RegisterView(generics.CreateAPIView):
     """
@@ -15,6 +17,7 @@ class RegisterView(generics.CreateAPIView):
 
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
+
 
 class LoginView(TokenObtainPairView):
     """
@@ -29,10 +32,13 @@ class RefreshTokenView(TokenRefreshView):
     """
     pass
 
+
 class ProfileView(APIView):
     """
     Return the currently authenticated user's information.
     """
+
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         return Response(
